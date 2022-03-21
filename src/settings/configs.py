@@ -14,16 +14,21 @@ class Config:
         self.MIX_PRECISION: bool = True
 
         self.BATCH_SIZE: int = 512
-        self.LEARNING_RATE: float = 1e-4
+        self.LEARNING_RATE: float = 1e-5
         self.TOTAL_EPOCHS: int = 5000
 
         self.LOAD_MODEL: bool = True
         self.MODEL_NAME: str = "92_35.pth"
         self.LOAD_BEST: bool = True
-        self.N_LOGS_PER_EPOCH: int = 3
+        self.N_LOGS_PER_EPOCH: int = 0
 
         # ==============================================
         # SPECIAL SETTINGS
+        
+        # Select in optim/load_opt and loss/load_loss
+        self.OPT = "SGD"
+        self.LOSS = "CrossEntropy"
+        
         self.EPOCHS_PER_EVAL: int = 1
         self.NUM_WORKERS: int = 4
         self.MODEL_DIR_NAME: str = "/models_v100/"

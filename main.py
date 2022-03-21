@@ -1,3 +1,5 @@
+from src.loss import LossSelector
+from src.optim import OptSelector
 from src.models import ini_model
 from src.preprocess import Preprocessor
 from src.settings import configs
@@ -38,9 +40,8 @@ def train():
         print(f"Start training! Total {configs.TOTAL_EPOCHS} epochs.\n")
     
     # Define loss function and optimizer for the following training process
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=configs.LEARNING_RATE, momentum=0.9, nesterov=True, weight_decay=0.0001)
-    # optimizer = optim.Adam(model.parameters(), lr=configs.LEARNING_RATE)
+    criterion = LossSelector(loss_name=configs.LOSS, cfg=configs).get_loss()
+    optimizer = OptSelector(model.parameters(), opt_name=configs.OPT, cfg=configs).get_optim()
     
     # Mixed precision for massive speed up
     # https://zhuanlan.zhihu.com/p/165152789
