@@ -38,14 +38,14 @@ class Preprocessor:
         if self.loader is not None:
             return self.loader
 
-        data_dir = configs.DATA_DIR
+        data_dir = configs._DATA_DIR
         batch_size = configs.BATCH_SIZE
         n_workers = configs.NUM_WORKERS
 
         train_set = CIFAR10(root=data_dir, train=True,
-                            download=True, transform=self.transform_train)
+                            download=False, transform=self.transform_train)
         test_set = CIFAR10(root=data_dir, train=False,
-                           download=True, transform=self.transform_test)
+                           download=False, transform=self.transform_test)
         if configs.DDP_ON:
             train_sampler = DistributedSampler(train_set)
             train_loader = DataLoader(train_set, batch_size=batch_size,
@@ -78,6 +78,6 @@ class Preprocessor:
             fig.add_subplot(wid, wid, i + 1)
             plt.imshow((np.transpose(loader.dataset[index][0].numpy(), (1, 2, 0))))
             plt.axis('off')
-            plt.title(configs.CLASSES[loader.dataset[index][1]])
+            plt.title(configs._CLASSES[loader.dataset[index][1]])
 
         fig.show()
